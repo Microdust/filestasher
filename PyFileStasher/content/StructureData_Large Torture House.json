@@ -1,0 +1,18 @@
+{
+  "Size": {
+    "Item1": 6,
+    "Item2": 4
+  },
+  "Name": "Large Torture House",
+  "Type": 21,
+  "Cost": 150,
+  "UnlockStage": 1,
+  "ButtonNormalColor": {
+    "R": 0.764151,
+    "A": 1.0
+  },
+  "ClassPath": "HA.Structures.StructureTortureHouse, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Custom": {
+    "MiseryIncrease": "100"
+  }
+}

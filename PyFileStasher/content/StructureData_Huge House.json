@@ -1,0 +1,20 @@
+{
+  "Size": {
+    "Item1": 4,
+    "Item2": 8
+  },
+  "Name": "Huge House",
+  "Type": 12,
+  "Cost": 200,
+  "UnlockStage": 2,
+  "ButtonNormalColor": {
+    "R": 0.008410451,
+    "G": 0.5943396,
+    "B": 0.04213372,
+    "A": 1.0
+  },
+  "ClassPath": "HA.Structures.StructureHouse, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Custom": {
+    "CapacityIncrease": "150"
+  }
+}

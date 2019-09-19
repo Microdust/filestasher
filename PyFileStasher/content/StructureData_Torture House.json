@@ -1,0 +1,17 @@
+{
+  "Size": {
+    "Item1": 3,
+    "Item2": 2
+  },
+  "Name": "Torture House",
+  "Type": 20,
+  "Cost": 15,
+  "ButtonNormalColor": {
+    "R": 1.0,
+    "A": 1.0
+  },
+  "ClassPath": "HA.Structures.StructureTortureHouse, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Custom": {
+    "MiseryIncrease": "10"
+  }
+}

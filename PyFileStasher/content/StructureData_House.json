@@ -1,0 +1,18 @@
+{
+  "Size": {
+    "Item1": 1,
+    "Item2": 2
+  },
+  "Name": "House",
+  "Type": 10,
+  "Cost": 10,
+  "ButtonNormalColor": {
+    "G": 1.0,
+    "B": 0.07363963,
+    "A": 1.0
+  },
+  "ClassPath": "HA.Structures.StructureHouse, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+  "Custom": {
+    "CapacityIncrease": "10"
+  }
+}
