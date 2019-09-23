@@ -9,6 +9,7 @@ class WriteablePacket:
         self.endian = 'little'
 
     def get_data(self) -> bytearray:
+        """Return the written bytes"""
         return self.__data 
     
     def compress(self):
@@ -18,28 +19,34 @@ class WriteablePacket:
         self.__data = zlib.decompress(self.__data)
 
     def __write(self, data: bytes):
+        """Internal function to write bytes directly to the writeable packet"""
         self.__data.extend(data)
 
     def __write_int(self, value: int, length: int, signed):
-        self.__write(value.to_bytes(length, self.endian, signed=signed))
+        """Internal function to write integers directly to the writeable packet"""
+        self.__write(value.to_bytes(length, self.__endian, signed=signed))
 
     def write_string(self, value:str):
-        data = bytes(value, encoding=self.encoding)
+        """Write a string to the writeable packet"""
+        data = bytes(value, encoding=self.__encoding)
         self.write_uint(len(data))
         self.__write(data)
     
     def write_blob(self, name:str, value:bytes):
+        """Write a binary object to the writeable packet"""
         self.write_string(name)
         self.write_uint(len(value))
         self.__write(value)
     
     def __read(self, length) -> bytes:
+        """Internal function to read bytes from the writeable packet"""
         offset = self.__index + length
         res = self.__data[self.__index:offset]
         self.__index = offset
         return res
     
     def read_blob(self) -> tuple:
+        """Read a blob from the data and return it as a tuple -> (name, bytes)"""
         name = self.read_string()
         content = self.__read(self.read_uint())
         return (name, content)
@@ -51,24 +58,31 @@ class WriteablePacket:
         return int.from_bytes(self.__read(Size.INTEGER), self.endian, signed=False)
 
     def read_string(self) -> str:
-        return self.__read(self.read_uint()).decode(self.encoding)    
+        """Read and return a string from the data""" 
+        return self.__read(self.read_uint()).decode(self.__encoding)    
 
     def write_ushort(self, value: int):
+        """Write an usigned short to the data"""
         self.__write_int(value, Size.SHORT, signed=False)
 
     def write_short(self, value: int):
+        """Write a signed short to the data"""
         self.__write_int(value, Size.SHORT, signed=True)
 
     def write_uint(self, value:int):
+        """Write an unsigned integer to the data"""
         self.__write_int(value, Size.INTEGER, signed=False)
 
     def write_int(self, value:int):
+        """Write a signed integer to the data"""
         self.__write_int(value, Size.INTEGER, signed=True)
 
     def write_ulong(self, value:int):
+        """Write an unsigned long to the data"""
         self.__write_int(value, Size.LONG, signed=False)
 
     def write_long(self, value:int):
+        """Write a signed long to the data"""
         self.__write_int(value, Size.LONG, signed=True)
 
 
