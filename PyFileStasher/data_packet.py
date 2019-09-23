@@ -2,11 +2,12 @@ import zlib
 from basic_types import Size
 
 class WriteablePacket:
-    def __init__(self):
-        self.__data = bytearray()
+    """Data handling object"""
+    def __init__(self, encoding='utf-8', endian='little', data=bytearray()):
+        self.__data = data
         self.__index = 0
-        self.encoding = 'utf-8'
-        self.endian = 'little'
+        self.__encoding = encoding
+        self.__endian = endian
 
     def get_data(self) -> bytearray:
         """Return the written bytes"""
