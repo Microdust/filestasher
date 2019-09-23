@@ -12,7 +12,7 @@ class WriteablePacket:
     def get_data(self) -> bytearray:
         """Return the written bytes"""
         return self.__data 
-    
+        
     def get_compressed(self) -> bytearray:
         """Return the written bytes as zlib compressed"""
         return zlib.compress(self.__data)
@@ -66,7 +66,7 @@ class WriteablePacket:
         """Read and return an unsigned integer from the data"""  
         return int.from_bytes(self.__read(Size.INTEGER), self.__endian, signed=False)
 
-    def read_int(self) -> int:      
+    def read_int(self) -> int:
         """Read and return a signed integer from the data"""      
         return int.from_bytes(self.__read(Size.INTEGER), self.__endian, signed=True)
     
@@ -106,7 +106,6 @@ class WriteablePacket:
         """Write a signed long to the data"""
         self.__write_int(value, Size.LONG, signed=True)
 
-
 class PackedData(WriteablePacket):
     def __init__(self):
         super().__init__()
@@ -115,15 +114,16 @@ class PackedData(WriteablePacket):
         self.content = []
 
     def add_blob(self, path: str, blob: bytes):
+        """Add a blob to the list of content to be packed"""
         self.content.append((path, blob))
         self.entries += 1
 
     def pack(self):
+        """Pack all the content into an array of bytes"""
         self.write_string(self.name)
         self.write_uint(self.entries)
         for path, blob in self.content:
             self.write_blob(path, blob)
-        #self.compress()
       
     def unpack(self):
         """Unpack the name of the package and entries for the bytes"""
@@ -137,7 +137,7 @@ class PackedData(WriteablePacket):
 def create_from_file(path: str) -> PackedData:
     """Create PackedData from an existing file and return it"""
     obj = PackedData()
-        with open(path, mode='rb') as f:
+    with open(path, mode='rb') as f:
         obj._WriteablePacket__data = f.read()
     obj.unpack()
     return obj
