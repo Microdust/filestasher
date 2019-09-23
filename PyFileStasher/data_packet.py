@@ -1,5 +1,6 @@
 import zlib
 from basic_types import Size
+from os.path import join
 
 class WriteablePacket:
     """Data handling object"""
@@ -132,14 +133,36 @@ class PackedData(WriteablePacket):
         self.name = self.read_string()
         self.entries = self.read_uint()
 
-        print(f'name: {self.name}, entries: {self.entries}')
         for i in range(0, self.entries):
             self.content.append(self.read_blob())
 
-def create_from_file(path: str) -> PackedData:
+def create_file_from_obj(obj: PackedData, path='', file_name='content.bin'):
+    """Create a binary file from a PackedData object"""
+    if not obj.isPacked:
+        print(f'Attempted to write: {file_name} but data was not packed... Packing data now')
+        obj.pack()
+
+    with open(join(path, file_name), mode='wb') as f:
+        f.write(obj.get_data())
+
+def create_obj_from_file(path: str) -> PackedData:
     """Create PackedData from an existing file and return it"""
     obj = PackedData()
     with open(path, mode='rb') as f:
         obj._WriteablePacket__data = f.read()
     obj.unpack()
+    obj.isPacked = True
     return obj
+
+def create_blobs_from_obj(obj: PackedData, dest_path: str):
+    """Create blobs/files from a PackedData object and write them to the specified path"""
+    for file, data in obj.content:
+        with open(join(dest_path, file), mode='w+b') as f:
+            f.write(data)
+
+def create_blobs_from_file(target_path: str, dest_path=''):
+    """Create blobs/files from a file at target_path and write them to the dest_path"""
+    obj = create_obj_from_file(target_path)
+    for file, data in obj.content:
+        with open(join(dest_path, file), mode='w+b') as f:
+            f.write(data)
