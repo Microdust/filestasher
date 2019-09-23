@@ -107,11 +107,12 @@ class WriteablePacket:
         self.__write_int(value, Size.LONG, signed=True)
 
 class PackedData(WriteablePacket):
-    def __init__(self):
+    def __init__(self, name=''):
         super().__init__()
-        self.name = ''
+        self.name = name
         self.entries = 0
         self.content = []
+        self.isPacked = False
 
     def add_blob(self, path: str, blob: bytes):
         """Add a blob to the list of content to be packed"""
@@ -124,6 +125,7 @@ class PackedData(WriteablePacket):
         self.write_uint(self.entries)
         for path, blob in self.content:
             self.write_blob(path, blob)
+        self.isPacked = True
       
     def unpack(self):
         """Unpack the name of the package and entries for the bytes"""
