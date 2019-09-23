@@ -13,11 +13,13 @@ class WriteablePacket:
         """Return the written bytes"""
         return self.__data 
     
-    def compress(self):
-       self.__data = zlib.compress(self.__data)
+    def get_compressed(self) -> bytearray:
+        """Return the written bytes as zlib compressed"""
+        return zlib.compress(self.__data)
     
-    def decompress(self):
-        self.__data = zlib.decompress(self.__data)
+    def decompress(self, bytes: bytearray) -> bytearray:
+        """Return the provided bytes as zlib decompressed"""
+        return zlib.decompress(bytes)
 
     def __write(self, data: bytes):
         """Internal function to write bytes directly to the writeable packet"""
