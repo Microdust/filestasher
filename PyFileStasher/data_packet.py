@@ -51,11 +51,29 @@ class WriteablePacket:
         content = self.__read(self.read_uint())
         return (name, content)
 
-    def read_int(self) -> int:      
-        return int.from_bytes(self.__read(Size.INTEGER), self.endian, signed=True)
-    
+    def read_ushort(self) -> int:
+        """Read and return an unsigned short from the data"""      
+        return int.from_bytes(self.__read(Size.SHORT), self.__endian, signed=False)
+
+    def read_short(self) -> int:
+        """Read and return a signed short from the data"""      
+        return int.from_bytes(self.__read(Size.SHORT), self.__endian, signed=True)
+
     def read_uint(self) -> int:
-        return int.from_bytes(self.__read(Size.INTEGER), self.endian, signed=False)
+        """Read and return an unsigned integer from the data"""  
+        return int.from_bytes(self.__read(Size.INTEGER), self.__endian, signed=False)
+
+    def read_int(self) -> int:      
+        """Read and return a signed integer from the data"""      
+        return int.from_bytes(self.__read(Size.INTEGER), self.__endian, signed=True)
+    
+    def read_ulong(self) -> int:
+        """Read and return an unsigned long from the data"""  
+        return int.from_bytes(self.__read(Size.LONG), self.__endian, signed=False)
+    
+    def read_long(self) -> int:
+        """Read and return a signed long from the data"""  
+        return int.from_bytes(self.__read(Size.LONG), self.__endian, signed=True)
 
     def read_string(self) -> str:
         """Read and return a string from the data""" 
