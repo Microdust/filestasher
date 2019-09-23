@@ -91,6 +91,7 @@ class PackedData(WriteablePacket):
         #self.compress()
       
     def unpack(self):
+        """Unpack the name of the package and entries for the bytes"""
         self.name = self.read_string()
         self.entries = self.read_uint()
 
@@ -98,8 +99,10 @@ class PackedData(WriteablePacket):
         for i in range(0, self.entries):
             self.content.append(self.read_blob())
 
-    def load_file(self, path: str):
+def create_from_file(path: str) -> PackedData:
+    """Create PackedData from an existing file and return it"""
+    obj = PackedData()
         with open(path, mode='rb') as f:
-            self._WriteablePacket__data = f.read()
-        #self.decompress()
-        self.unpack()
+        obj._WriteablePacket__data = f.read()
+    obj.unpack()
+    return obj
